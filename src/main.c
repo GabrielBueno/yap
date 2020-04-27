@@ -1,21 +1,20 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#include "screen.h"
+#include "game.h"
 
 int main(int argc, char **argv) {
-    printf("Hello, world!\n");
+    fprintf(stdout, "Initiating yap!\n");
 
-    Screen screen;
+    Game game;
 
-    if (init_screen("Yet Another Pong", 800, 600, &screen) < 0) {
-        fprintf(stderr, "Something wrong ocurred while initalizating the video system");
+    if (init_game(&game) < 0) {
+        fprintf(stderr, "Something wrong occurred while initializing the game...");
         exit(1);
     }
 
-    
-
-    close_screen(&screen);
+    run_game(&game);
+    close_game(&game);
 
     return 0;
 }
