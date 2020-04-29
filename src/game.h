@@ -2,9 +2,13 @@
 #define GAME_H
 
 #include "screen.h"
+#include "player.h"
 
 typedef int8_t  GameOperationResult;
 typedef uint8_t GameState;
+
+extern const uint32_t SCREEN_WIDTH;
+extern const uint32_t SCREEN_HEIGHT;
 
 extern const GameOperationResult GAME_SUCCESS;
 extern const GameOperationResult GAME_SDL_INIT_ERROR;
@@ -19,6 +23,9 @@ typedef struct game {
     Screen    screen;
     GameState state;
     uint32_t  last_tick;
+
+    Player player1;
+    Player player2;
 } Game;
 
 GameOperationResult init_game(Game* out_game);
