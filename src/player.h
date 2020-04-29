@@ -12,21 +12,21 @@ typedef struct player {
 /*!
  * Updates the player's body, based on its current velocity
  */
-void update(Player* player, double deltaSecs);
+void update_player(Player* player, double deltaSecs);
 
 /*!
  * Adjust the player's body velocity, to make him move up
  */
-void move_up(Player* player);
+void move_player_up(Player* player);
 
 /*!
  * Adjust the player's body velocity, to make him move down
  */
-void move_down(Player* player);
+void move_player_down(Player* player);
 
 /*!
  * Zero the player's velocities
  */
-void stop(Player* player);
+void stop_player(Player* player);
 
 #endif

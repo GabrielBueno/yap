@@ -6,12 +6,12 @@
 #include "color.h"
 
 typedef struct box {
-    uint32_t x;
-    uint32_t y;
-    uint32_t width;
-    uint32_t height;
-    uint32_t vel_x_per_seconds;
-    uint32_t vel_y_per_seconds;
+    double x;
+    double y;
+    double width;
+    double height;
+    double vel_x_per_seconds;
+    double vel_y_per_seconds;
     double   rotation;
     Color    color;
 } Box;

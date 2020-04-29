@@ -9,6 +9,7 @@ typedef uint8_t GameState;
 
 extern const uint32_t SCREEN_WIDTH;
 extern const uint32_t SCREEN_HEIGHT;
+extern const double FPS;
 
 extern const GameOperationResult GAME_SUCCESS;
 extern const GameOperationResult GAME_SDL_INIT_ERROR;

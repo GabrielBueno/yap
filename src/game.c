@@ -5,6 +5,7 @@
 
 const uint32_t SCREEN_WIDTH  = 800;
 const uint32_t SCREEN_HEIGHT = 600;
+const double FPS             = 1000 / 60;
 
 const GameOperationResult GAME_SUCCESS           = 1;
 const GameOperationResult GAME_SDL_INIT_ERROR    = -1;
@@ -16,7 +17,7 @@ const GameState GAME_STATE_PAUSED  = 3;
 const GameState GAME_STATE_ENDED   = 4;
 
 void _init_game_objs(Game* game);
-void _update(Game* game);
+void _update(Game* game, uint32_t deltaTicks);
 void _process_inputs(Game* game);
 void _draw(Game* game);
 void _box_to_sdl_rect(Box* src, SDL_Rect* dst);
@@ -44,8 +45,13 @@ void run_game(Game* game) {
         if (game->state == GAME_STATE_PAUSED)
             continue;
 
-        _update(game);
+        if (SDL_GetTicks() - game->last_tick < FPS)
+            continue;
+
+        _update(game, SDL_GetTicks() - game->last_tick);
         _draw(game);
+
+        game->last_tick = SDL_GetTicks();
     }
 }
 
@@ -75,8 +81,10 @@ void _draw(Game* game) {
     end_drawing(&game->screen);
 }
 
-void _update(Game* game) {
+void _update(Game* game, uint32_t deltaTicks) {
 
+    update_player(&game->player1, (double)deltaTicks / 1000);
+    update_player(&game->player2, (double)deltaTicks / 1000);
 }
 
 void _init_game_objs(Game* game) {
@@ -96,5 +104,25 @@ void _process_inputs(Game* game) {
     while (SDL_PollEvent(&ev)) {
         if (ev.type == SDL_QUIT)
             game->state = GAME_STATE_ENDED;
+
+        if (ev.type == SDL_KEYDOWN) {
+            switch (ev.key.keysym.sym) {
+                case SDLK_w:
+                    move_player_up(&game->player1);
+                    break;
+
+                case SDLK_s:
+                    move_player_down(&game->player1);
+                    break;
+            }
+        }
+
+        if (ev.type == SDL_KEYUP) {
+            switch (ev.key.keysym.sym) {
+                case SDLK_w:
+                case SDLK_s:
+                    stop_player(&game->player1);
+            }
+        }
     }
 }
