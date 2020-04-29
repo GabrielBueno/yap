@@ -26,3 +26,8 @@ uint8_t contains(Box* container, Box* contained) {
 
     return 0;
 }
+
+void update_position(Box* box, double secs) {
+    box->x += box->vel_x_per_seconds * secs;
+    box->y += box->vel_y_per_seconds * secs;
+}
