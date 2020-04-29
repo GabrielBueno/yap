@@ -82,9 +82,8 @@ void _draw(Game* game) {
 }
 
 void _update(Game* game, uint32_t deltaTicks) {
-
-    update_player(&game->player1, (double)deltaTicks / 1000);
-    update_player(&game->player2, (double)deltaTicks / 1000);
+    update_player(&game->player1, (double)deltaTicks / 1000, 0, SCREEN_HEIGHT);
+    update_player(&game->player2, (double)deltaTicks / 1000, 0, SCREEN_HEIGHT);
 }
 
 void _init_game_objs(Game* game) {

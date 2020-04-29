@@ -1,6 +1,6 @@
 #include "game_object.h"
 
-uint8_t collides(Box* target, Box* dest) {
+uint8_t box_collides(Box* target, Box* dest) {
     uint8_t collides_in_x = 0;
     uint8_t collides_in_y = 0;
 
@@ -19,7 +19,7 @@ uint8_t collides(Box* target, Box* dest) {
     return collides_in_x && collides_in_y;
 }
 
-uint8_t contains(Box* container, Box* contained) {
+uint8_t box_contains(Box* container, Box* contained) {
     if (container->x <= contained->x && container->x + container->width >= contained->x + contained->width)
         if (container->y <= contained->y && container->y + container->height >= contained->y + contained->height)
             return 1;

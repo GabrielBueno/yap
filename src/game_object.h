@@ -19,12 +19,12 @@ typedef struct box {
 /*!
  * Checks if one box collides with another box 
  */
-uint8_t collides(Box* target, Box* dest);
+uint8_t box_collides(Box* target, Box* dest);
 
 /*!
  * Checks if one box is in the boundaries of another box 
  */
-uint8_t contains(Box* container, Box* contained);
+uint8_t box_contains(Box* container, Box* contained);
 
 /*!
  * Updates the position of a box after a delta time, in seconds
