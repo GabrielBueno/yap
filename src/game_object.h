@@ -17,11 +17,11 @@ typedef struct box {
 /*
  * Checks if one box collides with another box 
  */
-uint8_t collides(Box, Box);
+uint8_t collides(Box* target, Box* dest);
 
 /*
  * Checks if one box is in the boundaries of another box 
  */
-uint8_t contains(Box, Box);
+uint8_t contains(Box* container, Box* contained);
 
 #endif
