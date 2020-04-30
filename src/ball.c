@@ -4,7 +4,6 @@
 #include <math.h>
 #include <time.h>
 #include <stdint.h>
-#include <stdio.h> // debug
 
 #include "game_object.h"
 
@@ -31,8 +30,6 @@ void update_ball(Ball* ball, double delta_secs, uint32_t top_limit, uint32_t bot
 
 	if (ball->body.vel_y_per_seconds < 0 && ball->body.y <= top_limit) 
 		ball->body.vel_y_per_seconds *= -1;
-
-	printf("%f\n", ball->degrees);
 
 	update_position(&ball->body, delta_secs);
 }

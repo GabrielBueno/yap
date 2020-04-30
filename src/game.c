@@ -2,6 +2,7 @@
 
 #include <SDL2/SDL.h>
 #include "color.h"
+#include "game_object.h"
 
 const uint32_t SCREEN_WIDTH  = 800;
 const uint32_t SCREEN_HEIGHT = 600;
@@ -88,6 +89,9 @@ void _update(Game* game, uint32_t delta_ticks) {
     update_player(&game->player1, delta_secs, 0, SCREEN_HEIGHT);
     update_player(&game->player2, delta_secs, 0, SCREEN_HEIGHT);
     update_ball(&game->ball, delta_secs,      0, SCREEN_HEIGHT);
+
+    if (box_collides(&game->ball.body, &game->player1.body) || box_collides(&game->ball.body, &game->player2.body))
+        game->ball.body.vel_x_per_seconds *= -1.3;
 }
 
 void _init_game_objs(Game* game) {
@@ -123,6 +127,14 @@ void _process_inputs(Game* game) {
 
                 case SDLK_s:
                     move_player_down(&game->player1);
+                    break;
+
+                case SDLK_UP:
+                    move_player_up(&game->player2);
+                    break;
+
+                case SDLK_DOWN:
+                    move_player_down(&game->player2);
                     break;
             }
         }

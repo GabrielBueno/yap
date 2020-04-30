@@ -11,12 +11,12 @@ void update_player(Player* player, double delta_secs, double limit_top, double l
 
 void move_player_up(Player* player) {
     player->body.vel_x_per_seconds = 0;
-    player->body.vel_y_per_seconds = -200;
+    player->body.vel_y_per_seconds = -400;
 }
 
 void move_player_down(Player* player) {
     player->body.vel_x_per_seconds = 0;
-    player->body.vel_y_per_seconds = 200;
+    player->body.vel_y_per_seconds = 400;
 }
 
 void stop_player(Player* player) {
