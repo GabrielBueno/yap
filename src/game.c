@@ -1,6 +1,8 @@
 #include "game.h"
 
 #include <SDL2/SDL.h>
+#include <stdio.h>
+
 #include "color.h"
 #include "game_object.h"
 
@@ -18,6 +20,7 @@ const GameState GAME_STATE_PAUSED  = 3;
 const GameState GAME_STATE_ENDED   = 4;
 
 void _init_game_objs(Game* game);
+void _reset_game_objs(Game* game);
 void _update(Game* game, uint32_t deltaTicks);
 void _process_inputs(Game* game);
 void _draw(Game* game);
@@ -92,6 +95,16 @@ void _update(Game* game, uint32_t delta_ticks) {
 
     if (box_collides(&game->ball.body, &game->player1.body) || box_collides(&game->ball.body, &game->player2.body))
         game->ball.body.vel_x_per_seconds *= -1.3;
+
+    if (game->ball.body.x <= 0) {
+        game->player2.score += 1;
+        _reset_game_objs(game);
+    }
+
+    if (game->ball.body.x >= SCREEN_WIDTH) {
+        game->player1.score += 1;
+        _reset_game_objs(game);
+    }
 }
 
 void _init_game_objs(Game* game) {
@@ -99,11 +112,13 @@ void _init_game_objs(Game* game) {
     game->player1.body.height = 50;
     game->player1.body.x      = 20;
     game->player1.body.y      = (SCREEN_HEIGHT / 2) - (game->player1.body.height / 2);
+    game->player1.score       = 0;
 
     game->player2.body.width  = 15;
     game->player2.body.height = 50;
     game->player2.body.x      = SCREEN_WIDTH - game->player2.body.width - 20;
     game->player2.body.y      = (SCREEN_HEIGHT / 2) - (game->player2.body.height / 2);
+    game->player2.score       = 0;
 
     game->ball.body.width  = 15;
     game->ball.body.height = 15;
@@ -111,6 +126,25 @@ void _init_game_objs(Game* game) {
     game->ball.body.y      = (SCREEN_HEIGHT / 2) - (game->ball.body.height / 2);
 
     randomize_angle(&game->ball);
+
+    fprintf(stdout, "Player 1: %d\nPlayer 2: %d\n\n", game->player1.score, game->player2.score);
+}
+
+void _reset_game_objs(Game* game) {
+    game->player1.body.x = 20;
+    game->player1.body.y = (SCREEN_HEIGHT / 2) - (game->player1.body.height / 2);
+
+    game->player2.body.x = SCREEN_WIDTH - game->player2.body.width - 20;
+    game->player2.body.y = (SCREEN_HEIGHT / 2) - (game->player2.body.height / 2);
+
+    game->ball.body.x = (SCREEN_WIDTH  / 2) - (game->ball.body.width  / 2);
+    game->ball.body.y = (SCREEN_HEIGHT / 2) - (game->ball.body.height / 2);
+
+    randomize_angle(&game->ball);
+
+    fprintf(stdout, "Player 1: %d\nPlayer 2: %d\n\n", game->player1.score, game->player2.score);
+
+    SDL_Delay(1000);
 }
 
 void _process_inputs(Game* game) {
@@ -144,6 +178,12 @@ void _process_inputs(Game* game) {
                 case SDLK_w:
                 case SDLK_s:
                     stop_player(&game->player1);
+                    break;  
+
+                case SDLK_UP:
+                case SDLK_DOWN:
+                    stop_player(&game->player2);
+                    break;
             }
         }
     }
