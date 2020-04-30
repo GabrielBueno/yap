@@ -1,12 +1,12 @@
 #include "player.h"
 
-void update_player(Player* player, double deltaSecs, double limitTop, double limitBottom) {
-    if (player->body.vel_y_per_seconds < 0 && player->body.y <= limitTop)
+void update_player(Player* player, double delta_secs, double limit_top, double limit_bottom) {
+    if (player->body.vel_y_per_seconds < 0 && player->body.y <= limit_top)
         stop_player(player);
-    else if (player->body.vel_y_per_seconds > 0 && player->body.y + player->body.height >= limitBottom)
+    else if (player->body.vel_y_per_seconds > 0 && player->body.y + player->body.height >= limit_bottom)
         stop_player(player);
     else
-        update_position(&player->body, deltaSecs);
+        update_position(&player->body, delta_secs);
 }
 
 void move_player_up(Player* player) {

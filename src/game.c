@@ -64,10 +64,11 @@ void close_game(Game* game) {
 void _draw(Game* game) {
     initialize_drawing(&game->screen);
 
-    Box* boxes[2];
+    Box* boxes[3];
 
     boxes[0] = &game->player1.body;
     boxes[1] = &game->player2.body;
+    boxes[2] = &game->ball.body;
 
     Color color;
 
@@ -76,14 +77,17 @@ void _draw(Game* game) {
     color.b = 0xff;
     color.a = 0xff;
 
-    draw_boxes(&game->screen, boxes, 2, color);
+    draw_boxes(&game->screen, boxes, 3, color);
 
     end_drawing(&game->screen);
 }
 
-void _update(Game* game, uint32_t deltaTicks) {
-    update_player(&game->player1, (double)deltaTicks / 1000, 0, SCREEN_HEIGHT);
-    update_player(&game->player2, (double)deltaTicks / 1000, 0, SCREEN_HEIGHT);
+void _update(Game* game, uint32_t delta_ticks) {
+    double delta_secs = (double)delta_ticks / 1000;
+
+    update_player(&game->player1, delta_secs, 0, SCREEN_HEIGHT);
+    update_player(&game->player2, delta_secs, 0, SCREEN_HEIGHT);
+    update_ball(&game->ball, delta_secs,      0, SCREEN_HEIGHT);
 }
 
 void _init_game_objs(Game* game) {
@@ -96,6 +100,13 @@ void _init_game_objs(Game* game) {
     game->player2.body.height = 50;
     game->player2.body.x      = SCREEN_WIDTH - game->player2.body.width - 20;
     game->player2.body.y      = (SCREEN_HEIGHT / 2) - (game->player2.body.height / 2);
+
+    game->ball.body.width  = 15;
+    game->ball.body.height = 15;
+    game->ball.body.x      = (SCREEN_WIDTH  / 2) - (game->ball.body.width  / 2);
+    game->ball.body.y      = (SCREEN_HEIGHT / 2) - (game->ball.body.height / 2);
+
+    randomize_angle(&game->ball);
 }
 
 void _process_inputs(Game* game) {

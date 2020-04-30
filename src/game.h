@@ -3,6 +3,7 @@
 
 #include "screen.h"
 #include "player.h"
+#include "ball.h"
 
 typedef int8_t  GameOperationResult;
 typedef uint8_t GameState;
@@ -27,6 +28,7 @@ typedef struct game {
 
     Player player1;
     Player player2;
+    Ball   ball;
 } Game;
 
 GameOperationResult init_game(Game* out_game);
