@@ -12,8 +12,7 @@ typedef struct box {
     double height;
     double vel_x_per_seconds;
     double vel_y_per_seconds;
-    double   rotation;
-    Color    color;
+    Color  color;
 } Box;
 
 /*!
