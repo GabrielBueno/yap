@@ -1,6 +1,6 @@
 ## Yet Another Pong
 
-This is a Pong clone, written in C and using SDL2, for experimentational purposes only
+This is another Pong clone, written in C and using SDL2, for experimentational purposes only
 
 ## Compiling (unix)
 
